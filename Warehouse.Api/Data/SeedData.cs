@@ -1,8 +1,8 @@
 
-using BranchOps.Api.Models;
+using Warehouse.Api.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BranchOps.Api.Data;
+namespace Warehouse.Api.Data;
 
 public static class SeedData
 {

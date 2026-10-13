@@ -1,21 +1,33 @@
+
 using Warehouse.Api.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BrancOps.Api.Data;
+namespace Warehouse.Api.Data;
 
 public class AppDbContext(
-    DbContextOptions<AppDbContext> options) : DbContext(options)
+    DbContextOptions<AppDbContext> options
+) : DbContext(options)
 {
-    public DbSet<Branch> Branches => Set<Branch>();
-    public DbSet<Product> Products => Set<Product>();
-    public DbSet<InventoryItem> InventoryItems => Set<InventoryItem>();
-    public DbSet<StockTransfer> StockTransfers => Set<StockTransfer>();
-    public DbSet<TransferEvent> TransferEvents => Set<TransferEvent>();
+    public DbSet<Branch> Branches =>
+        Set<Branch>();
 
-    protected override void OnModelCreating((ModelBuilder modelBuilder)
+    public DbSet<Product> Products =>
+        Set<Product>();
+
+    public DbSet<InventoryItem> InventoryItems =>
+        Set<InventoryItem>();
+
+    public DbSet<StockTransfer> StockTransfers =>
+        Set<StockTransfer>();
+
+    public DbSet<TransferEvent> TransferEvents =>
+        Set<TransferEvent>();
+
+    protected override void OnModelCreating(
+        ModelBuilder modelBuilder)
     {
-        // One inventory row per product per branch
-        modelBUilder.Entity<InventoryItem>()
+        // One inventory row per product per branch.
+        modelBuilder.Entity<InventoryItem>()
             .HasIndex(item => new
             {
                 item.BranchId,
@@ -23,12 +35,12 @@ public class AppDbContext(
             })
             .IsUnique();
 
-        //SKUs must identify unique products
-        modelBUilder.Entity.Entity<Product>()
+        // SKUs must identify unique products.
+        modelBuilder.Entity<Product>()
             .HasIndex(product => product.Sku)
             .IsUnique();
-        
-        // Limit transfer status string length
+
+        // Limit transfer status string length.
         modelBuilder.Entity<StockTransfer>()
             .Property(transfer => transfer.Status)
             .HasMaxLength(20);

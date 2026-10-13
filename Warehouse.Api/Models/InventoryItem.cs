@@ -1,6 +1,6 @@
 namespace Warehouse.Api.Models;
 
-public calss InventoryItem
+public class InventoryItem
 {
     public int Id { get; set; }
     public int BranchId { get; set; }
